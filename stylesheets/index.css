@@ -10,10 +10,6 @@ html{
 header{
     padding-bottom: 12vw;
 }
-header a{
-    text-decoration: none;
-    color: black;
-}
 #headbar{
     float: left;
     position: fixed;
