@@ -1,4 +1,102 @@
-body{
+*{
+    box-sizing: border-box;
     margin: 0px;
+    padding: 0px;
+}
+html{
     font-family: fantasy
+}
+
+header{
+    padding-bottom: 12vw;
+}
+header a{
+    text-decoration: none;
+    color: black;
+}
+#headbar{
+    float: left;
+    position: fixed;
+    width: 100%;
+    height: 10vw
+    
+    overflow: hidden;
+}
+#logo{
+    float: left;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    width: 8vw;
+    height: 8vw;
+}
+#title{
+    float: left;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    width: 25vw;
+    height: 10vw;
+}
+#title div{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#name{
+    padding-top: 10%;
+    height: 60%;
+    
+    font-size: 5vw;
+}
+#mode{
+    height: 40%;
+    
+    font-size: 3.2vw;
+    font-family:monospace;
+}
+#menu{
+    float: right;
+    margin-right: 2vw;
+    width: 50vw;
+    height: 10vw;
+}
+#menu div{
+    float: right;
+    margin-left: 10%;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+#menu div span{
+    user-select: none;
+    cursor:pointer;
+    font-size: 2.5vw;
+}
+
+/*Small Screen*/
+@media screen and (max-width: 600px){
+    #headbar{
+    background-color: coral;
+    }
+}
+/*Medium Screen*/
+@media screen and (min-width: 601px) and (max-width: 1000px){
+    #headbar{
+    background-color: cornflowerblue;
+    }
+}
+/*Large Screen*/
+@media screen and (min-width: 1001px) and (max-width: 1800px){
+    #headbar{
+    background-color: aqua;
+    }
+}
+/*Very Large Screen*/
+@media screen and (min-width: 1801px){
+    #headbar{
+    background-color: green;
+    }
 }
