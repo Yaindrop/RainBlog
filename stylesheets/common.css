@@ -20,6 +20,7 @@ header{
     position: fixed;
     top: 0;
     z-index: 1000;
+    width: 100vw;
     min-width: 100vw;
     line-height: 1;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -218,7 +219,7 @@ article{
     z-index: 500;
     background: no-repeat center coral;
     background-size: 90%;
-    background-image: url("../resources/cd.png");
+    background-image: url("../resources/player.png");
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
     transition: All 0.2s ease;
     /*medium screen*/
@@ -257,7 +258,7 @@ article{
     z-index: 0;
     left: 8%; right: 8%; top: 8%; bottom: 8%;
     background-color: no-repeat center;
-    background-image: url("../resources/CD.png");
+    background-image: url("../resources/player.png");
     background-size: 100%;
 }
 .music-button{
