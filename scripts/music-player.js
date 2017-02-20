@@ -188,13 +188,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
     
     cover.addEventListener("mouseenter", showMB);
     controller.addEventListener("mouseleave", hideMB);
-    controller.addEventListener("touchstart", showMB);
+    controller.addEventListener("click", showMB);
     body.addEventListener("touchstart", hideMB);
     
     for (var i = 0; i < musicInfos.length; i ++) {
-        musicInfos[i].addEventListener("touchstart", setInfoActive(musicInfos, i));
         musicInfos[i].addEventListener("mouseenter", setInfoActive(musicInfos, i));
         musicInfos[i].addEventListener("mouseleave", removeInfoActive(musicInfos, i));
+        musicInfos[i].addEventListener("click", setInfoActive(musicInfos, i));
         body.addEventListener("touchstart", removeInfoActive(musicInfos, i));
     }
     
