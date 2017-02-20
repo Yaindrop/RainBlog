@@ -5,10 +5,19 @@
         <meta http-equiv="content-type" content="text/html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="format-detection" content="telephone=no">
-        <link href="stylesheets/common.css" rel="stylesheet" type="text/css">
         <link rel="Shortcut Icon" href="resources/logo.png">
+        <!-- stylesheets -->
+        <link href="stylesheets/common.css" rel="stylesheet" type="text/css">
+        <link href="stylesheets/headbar.css" rel="stylesheet" type="text/css">
+        <link href="stylesheets/music-player.css" rel="stylesheet" type="text/css">
+        <link href="stylesheets/back-to-top.css" rel="stylesheet" type="text/css">
+        <link href="stylesheets/content.css" rel="stylesheet" type="text/css">
+        <link href="stylesheets/footer.css" rel="stylesheet" type="text/css">
+        <!-- scripts -->
         <script type="text/javascript" src="scripts/ajax.js"></script>
-        <script type="text/javascript" src="scripts/index.js"></script>
+        <script type="text/javascript" src="scripts/headbar.js"></script>
+        <script type="text/javascript" src="scripts/music-player.js"></script>
+        <script type="text/javascript" src="scripts/back-to-top.js"></script>
         <title>RainLand</title>
     </head>
     <body>
@@ -23,9 +32,9 @@
                     <div><img id="settings" src="resources/settings.png"></div>
                     <div>
                         <span id="social">Social</span>
-                        <div class="social-tag" id="weibo"></div>
-                        <div class="social-tag" id="music163"></div>
-                        <div class="social-tag" id="zhihu"></div>
+                        <div class="social-item" id="weibo"></div>
+                        <div class="social-item" id="music163"></div>
+                        <div class="social-item" id="zhihu"></div>
                     </div>
                     <div><span id="lab">Lab</span></div>
                     <div><span id="about">About</span></div>
@@ -33,6 +42,7 @@
             </div>
         </header> 
         <div id="content">
+            <audio id="audio-container"></audio>
             <article>
                 <h1 class="article-title">Title</h1>
                 <span class="article-time">2/19/2017</span>
@@ -52,36 +62,40 @@
                 </p>
             </article>
         </div>
-        <div id="player-button"></div>
-        <div id="player-control">
-            <div id="music-cover"></div>
-            <div id="music-hide" class="music-button"></div>
-            <div id="music-pause" class="music-button"></div>
-            <div id="music-forward" class="music-button"></div>
-            <div id="music-backward" class="music-button"></div>
-            <div id="music-running"></div>
-        </div>
-        <div id="player-bar">
-            <div id="music-info"><nobr>
-                <div id="music-title">中文ABCDEFGHIJ</div>
-                <div id="music-author">Author</div>
-                <div id="music-album">Album</div>
-            </nobr></div>
-            <div id="music-bararea">
-                <div id="music-progress">00:00</div>
-                <div id="music-bar">
-                    <div id="music-bar-mark"></div>
+        <div id="player">
+            <audio id="audio-container"></audio>
+            <div id="player-minimized"></div>
+            <div id="player-controller">
+                <div id="controller-cover"></div>
+                <div id="controller-hide" class="music-button"></div>
+                <div id="controller-pause" class="music-button"></div>
+                <div id="controller-forward" class="music-button"></div>
+                <div id="controller-backward" class="music-button"></div>
+                <div id="controller-list" class="music-button"></div>
+                <div id="controller-playmode" class="music-button"></div>
+            </div>
+            <div id="player-bar">
+                <div id="bar-info">
+                    <nobr><div id="info-title" class="music-info">Title</div><div id="info-artist" class="music-info">Artist</div><div id="info-album" class="music-info">Album</div></nobr>
                 </div>
-                <div id="music-length">59:59</div>
-                <div id="music-list"></div>
+                <div id="bar-progress">
+                    <div id="progress-current">00:00</div>
+                    <div id="progress-control">
+                        bar
+                        <div id="progress-control-mark"></div>
+                    </div>
+                    <div id="progress-duration">59:59</div>
+                </div>
+            </div>
+            <div id="player-list">
+                <div class="list-item"></div>
             </div>
         </div>
-        <div id="player-list"></div>
         <div id="back-to-top"></div>
         <footer>
             <div id="footarea">
-                <div>苟利国家生死以，岂因祸福避趋之。</div>
-                <div>Powered by <a href="https://github.com/" >GitHub</a></div>
+                <div id="poem">苟利国家生死以，岂因祸福避趋之。</div>
+                <div>Powered by <a href="https://github.com/Yaindrop/RainBlog" >GitHub</a></div>
             </div>
         </footer>
     </body>

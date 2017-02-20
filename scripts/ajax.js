@@ -1,3 +1,4 @@
+/*global window*/
 (function (window) {
     "use strict";
     var ajax = {};

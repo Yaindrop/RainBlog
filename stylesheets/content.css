@@ -1,18 +1,19 @@
-*{
-    box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
-}
-html{
-    background-color: #EEEEEE;
+/*Content Part*/
+#content{
+    position: relative;
+    min-width: 100%;
     /*medium screen*/
-    font-size: 18px;
-    font-family: "Comic Sans MS";
+    margin-top: 14vw;
 }
-a{
-    text-decoration: none;
+article{
+    margin: 10vw;
+    margin-top: 5vw;
+    margin-bottom: 5vw;
+    padding: 5vw;
+    padding-top: 4vw;
+    background-color: white;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
 }
 
 /*Small Screen*/

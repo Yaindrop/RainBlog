@@ -1,0 +1,207 @@
+/*Music Player*/
+#player-minimized{
+    position: fixed;
+    left: 0;
+    background: no-repeat center coral;
+    background-size: 90%;
+    background-image: url("../resources/player.png");
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    transition: All 0.2s ease;
+    /*medium screen*/
+    bottom: 10vw;
+    width: 8vw;
+    height: 8vw;
+    border-radius: 2vw;
+}
+.player-minimized-hide{
+    visibility: hidden!important;
+    opacity: 0 !important;
+}
+/*Player Controller*/
+.player-shown{
+    visibility: visible !important;
+    opacity: .8 !important;
+}
+#player-controller{
+    visibility: hidden;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    opacity: 0;
+    background-color: coral;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    transition: All 0.2s ease;
+    overflow: hidden;
+    /*medium screen*/
+    width: 18vw;
+    height: 18vw;
+}
+#controller-cover{
+    position: absolute;
+    z-index: -100;
+    left: 8%; right: 8%; top: 8%; bottom: 8%;
+    background: no-repeat center;
+    background-image: url("../resources/player.png");
+    background-size: 100%;
+}
+.music-button{
+    visibility: hidden;
+    position: absolute;
+    z-index: 100;
+    border-radius: 50%;
+    background: no-repeat center gray;
+    background-size: 50%;
+    opacity: 0;
+    transform: rotateY(90deg);
+    transition: All .4s ease;
+}
+.music-button-shown{
+    visibility: visible;
+    transform: rotateY(0deg);
+    opacity: 0.5;
+}
+#controller-hide{
+    left: 0; top: 0; right: 70%; bottom: 70%;
+    border-radius: 0;
+    border-bottom-right-radius: 100%;
+    background-image: url("../resources/minimize.png");
+    background-size: 60%;
+    transform-origin: left;
+}
+#controller-pause{
+    left: 35%; right: 35%; top: 35%; bottom: 35%;
+    background-image: url("../resources/resume.png");
+    background-size: 40%;
+}
+#controller-forward{
+    left: 70%; right: 10%; top: 40%; bottom: 40%;
+    background-image: url("../resources/forward.png");
+}
+#controller-backward{
+    left: 10%; right: 70%; top: 40%; bottom: 40%;
+    background-image: url("../resources/backward.png");
+}
+#controller-pause:hover,#controller-forward:hover,#controller-backward:hover,#controller-hide:hover{
+    transform: scale(1.2, 1.2);
+    opacity: 0.8;
+}
+
+#player-bar{
+    visibility: hidden;
+    position: fixed;
+    bottom: 0;
+    opacity: 0;
+    transition: All 0.2s ease;
+    user-select: none;
+    /*medium screen*/
+    left: 18vw;
+    width: 43.8vw;
+    height: 12vw;
+}
+/*Player Bar Info*/
+#bar-info{
+    background-color: antiquewhite;
+    position: relative;
+    width: 100%;
+    height: 61.8%;
+    overflow: hidden;
+}
+.music-info{
+    visibility: visible;
+    display: inline-block;
+    line-height: 7.4vw;
+    height: 100%;
+    overflow: hidden;
+    transition: All 0.2s ease;
+    border-left: 0vw solid coral;
+    border-right: 1vw solid coral;
+}
+#info-title{
+    width: 50%;
+    font-family: monospace;
+    font-size: 4vw;
+}
+#info-artist{
+    width: 25%;
+    font-size: 3vw;
+}
+#info-album{
+    width: 25%;
+    font-size: 3vw;
+}
+.info-active{
+    width: 100% !important;
+    border-left: 1vw solid coral;
+    border-right: 1vw solid coral;
+}
+.info-inactive{
+    width: 0 !important;
+    border-left: 0vw solid coral;
+    border-right: 0vw solid coral;
+    visibility: hidden;
+}
+/*Player Bar Progress*/
+#bar-progress{
+    position: relative;
+    width: 100%;
+    height: 38.2%;
+    background-color: beige;
+    font-size: 1.8vw;
+}
+#bar-progress div{
+    position: absolute;
+    top: 0; bottom: 0;
+    opacity: 0.8;
+    /*Compatible flex*/
+    display: flex;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -moz-flex;
+        display: -ms-flexbox;
+    /*Compatible justify-content*/
+    justify-content: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        -moz-justify-content: center;
+    /*Compatible align-items*/
+    align-items: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        -moz-align-items: center;
+}
+#progress-current{
+    left: 0;
+    margin-left: 2%;
+}
+#progress-duration{
+    right: 0;
+    margin-right: 2%;
+}
+#progress-control{
+    display: block;
+    width: 100%;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+/*Small Screen*/
+@media screen and (max-width: 600px){
+    
+}
+/*Medium Screen*/
+@media screen and (min-width: 601px) and (max-width: 1000px){
+    
+}
+/*Large Screen*/
+@media screen and (min-width: 1001px) and (max-width: 1800px){
+    
+}
+/*Very Large Screen*/
+@media screen and (min-width: 1801px){
+    
+}
