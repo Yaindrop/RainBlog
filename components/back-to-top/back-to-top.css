@@ -1,19 +1,18 @@
-/*Content Part*/
-#content{
-    position: relative;
-    min-width: 100%;
-    /*medium screen*/
-    margin-top: 14vw;
-}
-article{
-    margin: 10vw;
-    margin-top: 5vw;
-    margin-bottom: 5vw;
-    padding: 5vw;
-    padding-top: 4vw;
-    background-color: white;
+/*Back to Top*/
+#back-to-top{
+    position: fixed;
+    right: 0;
+    z-index: 500;
+    background: no-repeat center cadetblue;
+    background-size: 70%;
+    background-image: url("/components/back-to-top/resources/top.png");
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
-    font-size: 1rem;
+    transition: All 0.2s ease;
+    /*medium screen*/
+    bottom: 10vw;
+    width: 8vw;
+    height: 8vw;
+    border-radius: 2vw;
 }
 
 /*Small Screen*/

@@ -1,14 +1,14 @@
-/*Footer Part*/
-#footarea{
-    /*medium screen*/
-    margin: 3vw;
-    font-size: 1.5vw;
-    font-family: "STKaiti";
+article{
+    margin: 10vw;
+    margin-top: 5vw;
+    margin-bottom: 5vw;
+    padding: 5vw;
+    padding-top: 4vw;
+    background-color: white;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    font-family: Hiragino Sans GB;
 }
-#footarea div{
-    text-align: center;
-}
-
 /*Small Screen*/
 @media screen and (max-width: 600px){
     

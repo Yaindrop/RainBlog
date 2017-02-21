@@ -1,8 +1,8 @@
 /*global $ajax*/
 /*jshint browser: true */
-document.addEventListener("DOMContentLoaded", function (event) {
+(function () {
     "use strict";
-    var body = document.querySelector("body");
+    var content = document.getElementById("content");
     var showButton = document.getElementById("player-minimized");
     var controller = document.getElementById("player-controller");
     var bar = document.getElementById("player-bar");
@@ -28,8 +28,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     
     var musicList = [];
     
-    var musicLoadedEvent = document.createEvent('HTMLEvents');
-        musicLoadedEvent.initEvent('musicloaded', false, false);
+    var ajaxLoadedEvent = document.createEvent('HTMLEvents');
+        ajaxLoadedEvent.initEvent('ajaxloaded', false, false);
     var audioContainer = document.getElementById("audio-container");
     var loadedAudio = null;
     var listindex = 0;
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     window.clearInterval(timer);
                 }
                 count ++;
-            }, 160);
+            }, 200);
     }
     function hidePlayer () {
         var count = 0,
@@ -63,14 +63,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     window.clearInterval(timer);
                 }
                 count ++;
-            }, 160);
+            }, 100);
     }
     
         /*Music Button Show & Hide*/
     var MBShown = false;
     function showMB () {
         if (MBShown) return;
-        console.log("HERE");
         for (var i = 0; i < musicButtons.length; i ++) {
             musicButtons[i].classList.add("music-button-shown");
         }
@@ -131,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     function requestAudio () {
         $ajax.sendGetRequest("playlist/" + listindex + ".json", function (request) {
         loadedAudio = request;
-        audioContainer.dispatchEvent(musicLoadedEvent);
+        audioContainer.dispatchEvent(ajaxLoadedEvent);
         }, true);
     }
     
@@ -189,14 +188,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
     cover.addEventListener("mouseenter", showMB);
     controller.addEventListener("mouseleave", hideMB);
     controller.addEventListener("click", showMB);
-    body.addEventListener("touchstart", hideMB);
+    content.addEventListener("touchstart", hideMB);
     
     for (var i = 0; i < musicInfos.length; i ++) {
         musicInfos[i].addEventListener("mouseenter", setInfoActive(musicInfos, i));
         musicInfos[i].addEventListener("mouseleave", removeInfoActive(musicInfos, i));
         musicInfos[i].addEventListener("click", setInfoActive(musicInfos, i));
-        body.addEventListener("touchstart", removeInfoActive(musicInfos, i));
+        content.addEventListener("touchstart", removeInfoActive(musicInfos, i));
     }
     
-    audioContainer.addEventListener("musicloaded", loadAudio);
-});
+    audioContainer.addEventListener("ajaxloaded", loadAudio);
+}) ();

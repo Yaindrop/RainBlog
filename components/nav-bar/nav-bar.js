@@ -1,25 +1,19 @@
 /*global $ajax*/
 /*jshint browser: true */
-document.addEventListener("DOMContentLoaded", function (event) {
+(function () {
+    
     "use strict";
+    
+    var content = document.getElementById("content");
+    content.innerHTML = "<div id=\"nav-space\"></div>" + content.innerHTML;
     
     function MenuStatus () {
         this.isAnimating = false;
         this.isShown = false;
     }
-    
+    var socialMenu = document.getElementById("social");
     var socialItems = document.getElementsByClassName("social-item");
     var socialStatus = new MenuStatus ();
-    
-    document.getElementById("social").addEventListener("click", function () {
-        toggleMenu(socialItems, socialStatus);
-    });
-    document.querySelector("body").addEventListener("click", function () {
-        hideMenu(socialItems, socialStatus);
-    });
-    document.querySelector("body").addEventListener("touchstart", function () {
-        hideMenu(socialItems, socialStatus);
-    });
     
     function showMenu (items, status) {
         if (status.isAnimating || status.isShown) return;
@@ -56,4 +50,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
             showMenu(items, status);
         }
     }
-});
+    
+    socialMenu.addEventListener("click", function () {
+        toggleMenu(socialItems, socialStatus);
+    });
+    content.addEventListener("click", function () {
+        hideMenu(socialItems, socialStatus);
+    });
+    content.addEventListener("touchstart", function () {
+        hideMenu(socialItems, socialStatus);
+    });
+})();

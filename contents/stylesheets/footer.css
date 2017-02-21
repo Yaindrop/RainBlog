@@ -1,17 +1,11 @@
-/*Back to Top*/
-#back-to-top{
-    position: fixed;
-    right: 0;
-    z-index: 500;
-    background: no-repeat center cadetblue;
-    background-size: 70%;
-    background-image: url("../resources/top.png");
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+#footarea{
     /*medium screen*/
-    bottom: 10vw;
-    width: 8vw;
-    height: 8vw;
-    border-radius: 2vw;
+    margin: 3vw;
+    font-size: 1.5vw;
+    font-family: "STKaiti";
+}
+#footarea div{
+    text-align: center;
 }
 
 /*Small Screen*/

@@ -2,6 +2,8 @@
 (function (window) {
     "use strict";
     var ajax = {};
+    ajax.LoadedEvent = document.createEvent('HTMLEvents');
+                    ajax.LoadedEvent.initEvent('ajaxloaded', false, false);
     
     function getRequestObject() {
         //Check whether XMLHttpRequest exists.
@@ -33,4 +35,4 @@
         request.send(null); // for POST only
     };
     window.$ajax = ajax;
-}(window));
+})(window);

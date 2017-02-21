@@ -1,5 +1,5 @@
 /*jshint browser: true */
-document.addEventListener("DOMContentLoaded", function (event) {
+(function (event) {
     "use strict";
     
     document.getElementById("back-to-top").addEventListener("click", smoothscroll);
@@ -10,4 +10,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
             window.scrollTo (0,currentScroll - (currentScroll/4));
         }
     }
-});
+})();

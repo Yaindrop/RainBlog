@@ -4,7 +4,7 @@
     left: 0;
     background: no-repeat center coral;
     background-size: 90%;
-    background-image: url("../resources/player.png");
+    background-image: url("/components/music-player/resources/player.png");
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
     transition: All 0.2s ease;
     /*medium screen*/
@@ -41,7 +41,7 @@
     z-index: -100;
     left: 8%; right: 8%; top: 8%; bottom: 8%;
     background: no-repeat center;
-    background-image: url("../resources/player.png");
+    background-image: url("/components/music-player/resources/player.png");
     background-size: 100%;
 }
 .music-button{
@@ -64,22 +64,22 @@
     left: 0; top: 0; right: 70%; bottom: 70%;
     border-radius: 0;
     border-bottom-right-radius: 100%;
-    background-image: url("../resources/minimize.png");
+    background-image: url("/components/music-player/resources/minimize.png");
     background-size: 60%;
     transform-origin: left;
 }
 #controller-pause{
     left: 35%; right: 35%; top: 35%; bottom: 35%;
-    background-image: url("../resources/resume.png");
+    background-image: url("/components/music-player/resources/resume.png");
     background-size: 40%;
 }
 #controller-forward{
     left: 70%; right: 10%; top: 40%; bottom: 40%;
-    background-image: url("../resources/forward.png");
+    background-image: url("/components/music-player/resources/forward.png");
 }
 #controller-backward{
     left: 10%; right: 70%; top: 40%; bottom: 40%;
-    background-image: url("../resources/backward.png");
+    background-image: url("/components/music-player/resources/backward.png");
 }
 #controller-pause:hover,#controller-forward:hover,#controller-backward:hover,#controller-hide:hover{
     transform: scale(1.2, 1.2);
@@ -92,6 +92,7 @@
     bottom: 0;
     opacity: 0;
     transition: All 0.2s ease;
+    color: black;
     user-select: none;
     /*medium screen*/
     left: 18vw;

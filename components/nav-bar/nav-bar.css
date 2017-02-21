@@ -1,25 +1,29 @@
-header{
-    background-color: cornflowerblue;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    width: 100vw;
+#nav-space{
     min-width: 100vw;
-    line-height: 1;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-}
-/*Headbar Overall*/
-#headbar{
-    position: relative;
-    
-    font-family: fantasy;
-    user-select: none;
-    
     /*medium screen*/
     height: 10vw;
 }
-#headbar div{
+#nav-bar{
+    background-color: cornflowerblue;
     color: white;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    min-width: 100vw;
+    line-height: 1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transition: All 0.2s ease;
+}
+#nav-bar *{
+    transition: All 0.2s ease;
+}
+/*Nav Bar Overall*/
+#bar-content{
+    position: relative;
+    font-family: fantasy;
+    user-select: none;
+    /*medium screen*/
+    height: 10vw;
 }
 /*Logo Part*/
 #logo{
@@ -156,17 +160,17 @@ header{
     opacity: .8;
 }
 #weibo{
-    background-image: url("../resources/weibo.png");
+    background-image: url("/components/nav-bar/resources/weibo.png");
     /*medium screen*/
     bottom: -8vw;
 }
 #music163{
-    background-image: url("../resources/music163.png");
+    background-image: url("/components/nav-bar/resources/music163.png");
     /*medium screen*/
     bottom: -16vw;
 }
 #zhihu{
-    background-image: url("../resources/zhihu.png");
+    background-image: url("/components/nav-bar/resources/zhihu.png");
     /*medium screen*/
     bottom: -24vw;
 }

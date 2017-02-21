@@ -4,6 +4,7 @@
         -moz-box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
 }
 html{
     background-color: #EEEEEE;
@@ -13,6 +14,16 @@ html{
 }
 a{
     text-decoration: none;
+    color: cadetblue;
+    transition: All .2s linear;
+}
+a:hover{
+    color: coral;
+}
+#content{
+    position: relative;
+    min-height: 100vh;
+    min-width: 100vw;
 }
 
 /*Small Screen*/

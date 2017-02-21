@@ -23,7 +23,7 @@
                     loadedContentCSS = [],
                     loadedContentJS = [];
                 
-                $ajax.sendGetRequest("index.json", function (request) {
+                $ajax.sendGetRequest("cs.json", function (request) {
                     loadedJson = request;
                     body.dispatchEvent($ajax.LoadedEvent);
                 }, true);
