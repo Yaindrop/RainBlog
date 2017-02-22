@@ -1,9 +1,13 @@
-/*global window*/
+/* jshint browser: true */
 (function (window) {
     "use strict";
     var ajax = {};
-    ajax.LoadedEvent = document.createEvent('HTMLEvents');
-                    ajax.LoadedEvent.initEvent('ajaxloaded', false, false);
+    
+    ajax.makeEvent = function (message) {
+        var e = new Event("ajaxfinished");
+        if (message) e.message = message;
+        return e;
+    }
     
     function getRequestObject() {
         //Check whether XMLHttpRequest exists.

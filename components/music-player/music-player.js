@@ -1,5 +1,5 @@
-/*global $ajax*/
-/*jshint browser: true */
+/* global $ajax*/
+/* jshint browser: true */
 (function () {
     "use strict";
     var content = document.getElementById("content");

@@ -1,0 +1,4 @@
+{
+    "components": ["music-player", "back-to-top"],
+    "contents": ["article1", "footer"]
+}
