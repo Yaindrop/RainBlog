@@ -2,7 +2,7 @@
 /* jshint browser: true */
 (function () {
     "use strict";
-    var content = document.getElementById("content");
+    var content = document.getElementById("content-wrapper");
     var showButton = document.getElementById("player-minimized");
     var controller = document.getElementById("player-controller");
     var bar = document.getElementById("player-bar");

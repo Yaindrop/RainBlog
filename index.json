@@ -1,4 +1,5 @@
 {
+    "title": "Rainarea - index",
     "components": ["nav-bar", "music-player", "back-to-top"],
     "contents": ["article1", "article2", "footer"]
 }

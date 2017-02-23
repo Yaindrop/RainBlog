@@ -21,12 +21,22 @@ a{
 a:hover{
     color: coral;
 }
-#content{
+#content-wrapper{
     position: relative;
+    overflow: hidden;
     min-height: 100vh;
     min-width: 100%;
 }
-
+/*
+#content-wrapper div{
+    transition: All .4s linear;
+}
+.hidden-content{
+    transform: scale(0);
+    height: 0;
+    opacity: 0;
+}
+*/
 ::-webkit-scrollbar {
     height: .5vw;
     width: .5vw;
