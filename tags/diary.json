@@ -1,4 +1,5 @@
 {
-    "components": ["music-player", "back-to-top"],
+    "title": "Rainarea - Diary",
+    "components": ["nav-bar", "back-to-top"],
     "contents": ["article1", "footer"]
 }

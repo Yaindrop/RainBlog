@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     var delay1 = setTimeout(function () {
         ajaxRefreshWith("/tags/diary.json");
         var delay2 = setTimeout(function () {
-            ajaxRefreshWith("index.json");
+            ajaxRefreshWith("/index.json");
         },3000);
     },3000);
     
@@ -36,13 +36,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
         //Fetch the requested JSON file, then call the body
         $ajax.sendGetRequest(json, function (request) {
             PageJSON = request;
-            window.console.log("%cPage> JSON Loaded, URL: " + json, "color: orange");
+            window.console.log("%cPage> JSON Loaded, URI: " + json, "color: orange");
+            htmlURI = json.substring(0, json.indexOf(".")) + ".html";
+            window.history.pushState({}, 0, htmlURI);
             body.dispatchEvent($ajax.makeEvent("jsonloaded"));
         }, true);
     }
     body.addEventListener("ajaxfinished", function (e) {
         //If a new JSON file is loaded, load components and contents.
         if (e.message === "jsonloaded") {
+            document.getElementsByTagName("title")[0].innerHTML = PageJSON.title;
             loadComponents();
             loadContents();
         }

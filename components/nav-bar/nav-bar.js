@@ -9,9 +9,7 @@ Instructions:
     2. When the uninstall function is called, any external effects made by this script should be inversed.
 */
 (function () {
-    
     "use strict";
-    
     var component = document.getElementById("nav-bar");
     var body = document.getElementsByTagName("body")[0];
     var content = document.getElementById("content-wrapper");

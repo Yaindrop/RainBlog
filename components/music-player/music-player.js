@@ -2,6 +2,7 @@
 /* jshint browser: true */
 (function () {
     "use strict";
+    var component = document.getElementById("music-player");
     var content = document.getElementById("content-wrapper");
     var showButton = document.getElementById("player-minimized");
     var controller = document.getElementById("player-controller");
@@ -182,13 +183,25 @@
         return {x: eleLeft, y: eleTop};
     }
     */
+    
+    install ();
     showButton.addEventListener("click", showPlayer);
     hideButton.addEventListener("click", hidePlayer);
     
     cover.addEventListener("mouseenter", showMB);
     controller.addEventListener("mouseleave", hideMB);
     controller.addEventListener("click", showMB);
-    content.addEventListener("touchstart", hideMB);
+    
+    function install () {
+        component.style.display = "block";
+        content.addEventListener("touchstart", hideMB);
+        component.active = true;
+    }
+    function uninstall () {
+        component.style.display = "none";
+        controller.removeEventListener("mouseleave", hideMB);
+        component.active = false;
+    }
     
     for (var i = 0; i < musicInfos.length; i ++) {
         musicInfos[i].addEventListener("mouseenter", setInfoActive(musicInfos, i));
@@ -198,4 +211,7 @@
     }
     
     audioContainer.addEventListener("ajaxloaded", loadAudio);
+    
+    component.addEventListener("install", install);
+    component.addEventListener("uninstall", uninstall);
 }) ();
