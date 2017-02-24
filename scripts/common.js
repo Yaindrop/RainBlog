@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 if (temp.nextElementSibling) {
                     ContentWrapper.insertBefore(a, temp.nextElementSibling);
                 } else {
-                    a.appendChild(a.parentElement);
+                    a.parentNode.appendChild(a);
                 }
             }
             temp = loadedContents[swap.firstindex];
