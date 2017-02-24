@@ -1,0 +1,5 @@
+{
+    "title": "Rainarea - Tag1",
+    "components": ["nav-bar", "music-player", "back-to-top"],
+    "contents": ["article1", "footer"]
+}

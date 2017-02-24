@@ -12,8 +12,11 @@ Instructions:
     "use strict";
     var component = document.getElementById("nav-bar");
     var body = document.getElementsByTagName("body")[0];
-    var content = document.getElementById("content-wrapper");
+    var ContentWrapper = document.getElementById("content-wrapper");
     
+    var content = document.getElementById("bar-content");
+    var title = document.getElementById("bar-title");
+    var menu = document.getElementById("bar-menu");
     var socialMenu = document.getElementById("social");
     var socialItems = document.getElementsByClassName("social-item");
     var socialStatus = new MenuStatus ();
@@ -57,15 +60,35 @@ Instructions:
             showMenu(items, status);
         }
     }
-    
+    var lastPos = 0;
+    var isHidden = false;
+    function checkScroll () {
+        if (document.body.scrollTop > component.offsetHeight && document.body.scrollTop > lastPos) {
+            if (!isHidden) {
+                title.classList.add("hidden-bar-content");
+                menu.classList.add("hidden-bar-content");
+                component.classList.add("hidden-bar");
+                isHidden = true;
+            }
+        } else {
+            if (isHidden) {
+                title.classList.remove("hidden-bar-content");
+                menu.classList.remove("hidden-bar-content");
+                component.classList.remove("hidden-bar");
+                isHidden = false;
+            }
+        }
+        lastPos = document.body.scrollTop;
+    }
     function install () {
         component.style.display = "block";
-        content.innerHTML = "<div id=\"nav-space\"></div>" + content.innerHTML;
+        ContentWrapper.innerHTML = "<div id=\"nav-space\"></div>" + ContentWrapper.innerHTML;
+        window.onscroll = checkScroll;
         component.active = true;
     }
     function uninstall () {
         component.style.display = "none";
-        content.removeChild(document.getElementById("nav-space"));
+        ContentWrapper.removeChild(document.getElementById("nav-space"));
         component.active = false;
     }
     
@@ -73,10 +96,10 @@ Instructions:
     socialMenu.addEventListener("click", function () {
         toggleMenu(socialItems, socialStatus);
     });
-    content.addEventListener("click", function () {
+    ContentWrapper.addEventListener("click", function () {
         hideMenu(socialItems, socialStatus);
     });
-    content.addEventListener("touchstart", function () {
+    ContentWrapper.addEventListener("touchstart", function () {
         hideMenu(socialItems, socialStatus);
     });
     

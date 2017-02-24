@@ -1,5 +1,0 @@
-{
-    "title": "Rainarea - Diary",
-    "components": ["nav-bar", "back-to-top"],
-    "contents": ["article1", "footer"]
-}

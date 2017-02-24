@@ -27,13 +27,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
         ContentLoaded = true;
     //Initialize page with JSON file pointed by the url stored in the title tag.
     ajaxRefreshWith(document.getElementsByTagName("title")[0].dataset.json);
+    
     //just for test
     var delay1 = setTimeout(function () {
-        ajaxRefreshWith("/tags/diary.json");
+        ajaxRefreshWith("/tags/tag1.json");
         var delay2 = setTimeout(function () {
-            ajaxRefreshWith("/index.json");
-        },3000);
-    },3000);
+            ajaxRefreshWith("/tags/tag2.json");
+        },4000);
+    },4000);
     
     function ajaxRefreshWith (json) {
         if (ComponentLoaded && ContentLoaded) {
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             $ajax.sendGetRequest(json, function (request) {
                 PageJSON = request;
                 window.console.log("%cAJAX> Page JSON Loaded, URI: " + json, "color: darkcyan");
-                htmlURI = json.substring(0, json.indexOf(".")) + ".html";
+                var htmlURI = json.substring(0, json.indexOf(".")) + ".html";
                 window.history.pushState({}, 0, htmlURI);
                 body.dispatchEvent($ajax.makeEvent("jsonloaded"));
             }, true);
@@ -64,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             if (!isAddingComponents && !isRemovingComponents) {
                 window.console.log("%cComponents> Loading Finished", "color: green");
                 for (var i = 0; i < PageJSON.components.length; i ++) {
-                    component = document.getElementById(PageJSON.components[i]);
+                    var component = document.getElementById(PageJSON.components[i]);
                     if (!component.active) component.dispatchEvent(new Event("install"));
                 }
                 ComponentLoaded = true;
@@ -84,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     });
     function sortContents () {
-        var deviation = []
+        var deviation = [];
         for (var i = 0; i < PageJSON.contents.length; i ++) {
             deviation.push(Math.abs(loadedContents.indexOf(PageJSON.contents[i]) - i));
         }
@@ -107,12 +108,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
             var a = document.getElementById(loadedContents[Math.min(swap.firstindex, swap.secondindex)]),
                 b = document.getElementById(loadedContents[Math.max(swap.firstindex, swap.secondindex)]);
             if (Math.abs(swap.firstindex - swap.secondindex) === 1) {
-                b.insertBefore(a, null);
+                ContentWrapper.insertBefore(b, a);
             } else {
                 var temp = b.previousElementSibling;
-                b.insertBefore(a, null);
+                ContentWrapper.insertBefore(b, a);
                 if (temp.nextElementSibling) {
-                    a.insertBefore(temp.nextElementSibling, null);
+                    ContentWrapper.insertBefore(a, temp.nextElementSibling);
                 } else {
                     a.appendChild(a.parentElement);
                 }
@@ -226,8 +227,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
         isRemovingComponents = false;
         body.dispatchEvent($ajax.makeEvent("componentloaded"));
-    }
-    
+    } 
     
     var isAddingContents = false, 
         isRemovingContents = false;
