@@ -63,14 +63,14 @@ Instructions:
     var lastPos = 0;
     var isHidden = false;
     function checkScroll () {
-        if (document.body.scrollTop > component.offsetHeight && document.body.scrollTop > lastPos) {
+        if (document.body.scrollTop > component.offsetHeight && document.body.scrollTop > lastPos + 5) {
             if (!isHidden) {
                 title.classList.add("hidden-bar-content");
                 menu.classList.add("hidden-bar-content");
                 component.classList.add("hidden-bar");
                 isHidden = true;
             }
-        } else {
+        } else if (document.body.scrollTop < lastPos - 5){
             if (isHidden) {
                 title.classList.remove("hidden-bar-content");
                 menu.classList.remove("hidden-bar-content");

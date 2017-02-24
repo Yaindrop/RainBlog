@@ -24,7 +24,7 @@
 }
 .hidden-bar #logo{
     background-image: url("/components/nav-bar/resources/logo_cornflowerblue.png");
-    visibility: visible;
+    visibility: visible !important;
 }
 /*Nav Bar Overall*/
 #bar-content{
