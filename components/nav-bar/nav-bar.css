@@ -8,7 +8,6 @@
     color: white;
     position: fixed;
     top: 0;
-    z-index: 1000;
     min-width: 100vw;
     line-height: 1;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -17,29 +16,29 @@
 #nav-bar *{
     transition: All 0.2s ease;
 }
-.hidden-bar{
+.hidden-nb{
     background-color: rgba(0, 0, 0, 0) !important;
     box-shadow: none !important;
     visibility: hidden;
 }
-.hidden-bar #logo{
-    background-image: url("/components/nav-bar/resources/logo_cornflowerblue.png");
+.hidden-nb #nb-logo{
     visibility: visible !important;
+    background-image: url("/components/nav-bar/resources/logo_cornflowerblue.png");
 }
 /*Nav Bar Overall*/
-#bar-content{
+#nb-content{
     position: relative;
     font-family: fantasy;
     user-select: none;
     /*medium screen*/
     height: 10vw;
 }
-.hidden-bar-content{
+.hidden-nb-content{
     opacity: 0;
     visibility: hidden;
 }
 /*Logo Part*/
-#logo{
+#nb-logo{
     background: url(/components/nav-bar/resources/logo.png) no-repeat center;
     background-size: 90%;
     display: inline-block;
@@ -54,29 +53,29 @@
     height: 8vw;
 }
 /*Title Part*/
-#bar-title{
+#nb-title{
     display: inline-block;
     /*medium screen*/
     width: 25vw;
     height: 10vw;
 }
-#bar-title div{
+#nb-title div{
     display: flex;
     justify-content: center;
     align-items: center;
 }
-#name{
+#nb-name{
     padding-top: 10%;
     height: 70%;
     font-size: 4.8vw;
 }
-#name ~ div{
+#nb-name ~ div{
     position: relative;
     width: 100%;
     height: 30%;
     overflow: hidden;
 }
-#mode{
+#nb-mode{
     position: absolute; left: 50%; top: 50%;
     transform: translate(-50%, -50%);
     padding-left: .8vw; padding-right: .8vw;
@@ -85,9 +84,10 @@
     font-family: monospace;
     color: darkslategrey;
     font-size: 3vw;
+    cursor:pointer;
 }
 /*Menu Part*/
-#bar-menu{
+#nb-menu{
     position: absolute;
     right: 0vw;
     padding-right: 3vw;
@@ -95,7 +95,7 @@
     width: 50vw;
     height: 10vw;
 }
-#bar-menu > div{
+#nb-menu > div{
     /*medium screen*/
     float: right;
     margin-left: 10%;
@@ -104,55 +104,74 @@
     justify-content: center;
     align-items: center;
 }
-#bar-menu > div span, #bar-menu > div img{
+#nb-menu > div span, #nb-menu > div img{
     cursor:pointer;
     font-size: 2.5vw
 }
-#settings{
+#nb-settings{
     /*medium screen*/
     width: 5vw;
     height: 5vw;
 }
-#bar-menu > div:nth-child(2){
+#nb-menu > div:nth-chile(2){
     position: relative;
 }
-.social-item{
+.nb-social-item{
     visibility: hidden;
-    position: absolute; left: 50%;
+    position: absolute;
     border: 1px solid rgba(255, 255, 255, 0);
     background: no-repeat center #4DD8C9;
     background-size: 62.5%;
     background-clip:padding-box;
     cursor:pointer;
     opacity: 0;
-    transform: translate(-50%) rotateX(90deg);
+    transform: rotateX(90deg);
     transform-origin: top;
     transition: All .5s ease;
     /*medium screen*/
     width: 8vw;
     height: 8vw;
 }
-.social-item-shown{
-    visibility: visible;
-    transform:translate(-50%) rotateX(0deg);
-    opacity: .8;
-}
-#weibo{
+#nb-weibo{
     background-image: url("/components/nav-bar/resources/weibo.png");
     /*medium screen*/
     bottom: -8vw;
 }
-#music163{
+#nb-music163{
     background-image: url("/components/nav-bar/resources/music163.png");
     /*medium screen*/
     bottom: -16vw;
 }
-#zhihu{
+#nb-zhihu{
     background-image: url("/components/nav-bar/resources/zhihu.png");
     /*medium screen*/
     bottom: -24vw;
 }
-
+.nb-settings-item{
+    visibility: hidden;
+    position: absolute; right: 0;
+    border: 1px solid rgba(255, 255, 255, 0);
+    background: no-repeat center #4DD8C9;
+    background-size: 62.5%;
+    background-clip:padding-box;
+    cursor:pointer;
+    opacity: 0;
+    transform: rotateX(90deg);
+    transform-origin: top;
+    transition: All .5s ease;
+    /*medium screen*/
+    width: 28vw;
+    height: 8vw;
+}
+#nb-lang{
+    /*medium screen*/
+    bottom: -8vw;
+}
+.nb-item-shown{
+    visibility: visible;
+    transform: rotateX(0deg);
+    opacity: .8;
+}
 /*Small Screen*/
 @media screen and (max-width: 600px){
     

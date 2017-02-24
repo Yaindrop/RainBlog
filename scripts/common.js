@@ -29,12 +29,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     ajaxRefreshWith(document.getElementsByTagName("title")[0].dataset.json);
     
     //just for test
-    var delay1 = setTimeout(function () {
-        ajaxRefreshWith("/tags/tag1.json");
-        var delay2 = setTimeout(function () {
-            ajaxRefreshWith("/tags/tag2.json");
-        },4000);
-    },4000);
+//    var delay1 = setTimeout(function () {
+//        ajaxRefreshWith("/tags/tag1.json");
+//        var delay2 = setTimeout(function () {
+//            ajaxRefreshWith("/tags/tag2.json");
+//        },4000);
+//    },4000);
     
     function ajaxRefreshWith (json) {
         if (ComponentLoaded && ContentLoaded) {

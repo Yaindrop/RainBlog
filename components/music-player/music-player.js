@@ -18,28 +18,23 @@
     var playmodeButton = document.getElementById("controller-playmode");
     
     var musicInfos = document.getElementsByClassName("music-info");
-    var musicTitle = document.getElementsByClassName("info-title");
-    var musicArtist = document.getElementsByClassName("info-artist");
-    var musicAlbum = document.getElementsByClassName("info-album");
+    var musicTitle = document.getElementById("info-title");
+    var musicArtist = document.getElementById("info-artist");
+    var musicAlbum = document.getElementById("info-album");
     
-    var musicCurrent = document.getElementsByClassName("progress-current");
-    var musicProgressController = document.getElementsByClassName("progress-control");
-    var musicProgressMark = document.getElementsByClassName("progress-control");
-    var musicDuration = document.getElementsByClassName("progress-duration");
+    var musicCurrent = document.getElementById("progress-current");
+    var musicProgressController = document.getElementById("progress-control");
+    var musicProgressMark = document.getElementById("progress-control");
+    var musicDuration = document.getElementById("progress-duration");
     
     var musicList = [];
     
-    var ajaxLoadedEvent = document.createEvent('HTMLEvents');
-        ajaxLoadedEvent.initEvent('ajaxloaded', false, false);
+    var ajaxLoadedEvent = $ajax.makeEvent();
     var audioContainer = document.getElementById("audio-container");
     var loadedAudio = null;
     var listindex = 0;
     var isPaused = true;
-    var checkProgress = window.setInterval(function () {
-        if (loadedAudio !== null && !audioContainer.paused) {
-            musicCurrent.innerHTML = parseInt(audioContainer.currentTime / 60) + ":" + (audioContainer.currentTime % 60);
-        }
-    }, 500);
+    var checkProgress;
     
     /*Player Show & Hide*/
     function showPlayer () {
@@ -105,15 +100,25 @@
     }
     
         /*Control Audio*/
-    pauseButton.addEventListener("click", function () {
-        if (isPaused) {
-            
+    function PauseOrResume () {
+        if (loadedAudio) {
+            if (audioContainer.paused) {
+                audioContainer.play();
+                pauseButton.style.backgroundImage = "url(/components/music-player/resources/pause.png)";
+                checkProgress = window.setInterval(listenTime, 500);
+            } else {
+                audioContainer.pause();
+                pauseButton.style.backgroundImage = "url(/components/music-player/resources/resume.png)";
+                window.clearInterval(checkProgress);
+            }
+        } else {
+            requestAudio();
         }
-    });
-    function resume () {
-        if (loadedAudio === null) {
-            requestAudio ();
-            
+    }
+    function listenTime() {
+        if (loadedAudio !== null && !audioContainer.paused) {
+            musicCurrent.innerHTML = parseInt(audioContainer.currentTime / 60) + ":" + parseInt(audioContainer.currentTime % 60);
+            musicDuration.innerHTML = parseInt(audioContainer.duration / 60) + ":" + parseInt(audioContainer.duration % 60);
         }
     }
     function loadAudio () {
@@ -123,13 +128,12 @@
         musicTitle.innerHTML = loadedAudio.title;
         musicArtist.innerHTML = loadedAudio.artist;
         musicAlbum.innerHTML = loadedAudio.album;
-        musicDuration.innerHTML = parseInt(audioContainer.duration / 60) + ":" + (audioContainer.duration % 60);
         audioContainer.volume = loadedAudio.default_volume;
         audioContainer.load();
-        if (!isPaused) audioContainer.play();
+        PauseOrResume();
     }
     function requestAudio () {
-        $ajax.sendGetRequest("playlist/" + listindex + ".json", function (request) {
+        $ajax.sendGetRequest("/components/music-player/playlist/" + listindex + ".json", function (request) {
         loadedAudio = request;
         audioContainer.dispatchEvent(ajaxLoadedEvent);
         }, true);
@@ -137,8 +141,7 @@
     
     
     /*Control Bar*/
-    /*
-    var musicBar = document.getElementById("music-bar");
+    var musicBar = document.getElementById("bar-progress");
     var isOnBar = false;
     var toTime = null;
     musicBar.addEventListener("mousedown", function (e) {
@@ -168,7 +171,6 @@
     });
     function barSetTime () {
         audioContainer.currentTime = audioContainer.duration * toTime;
-        document.getElementById("music-length").innerHTML = audioContainer.duration;
     }
     function getPos (ele) {
         var eleParent;
@@ -182,7 +184,6 @@
         }
         return {x: eleLeft, y: eleTop};
     }
-    */
     
     install ();
     showButton.addEventListener("click", showPlayer);
@@ -192,6 +193,8 @@
     controller.addEventListener("mouseleave", hideMB);
     controller.addEventListener("click", showMB);
     
+    pauseButton.addEventListener("click", PauseOrResume);
+    
     function install () {
         component.style.display = "block";
         content.addEventListener("touchstart", hideMB);
@@ -199,7 +202,7 @@
     }
     function uninstall () {
         component.style.display = "none";
-        controller.removeEventListener("mouseleave", hideMB);
+        content.removeEventListener("touchstart", hideMB);
         component.active = false;
     }
     
@@ -210,7 +213,7 @@
         content.addEventListener("touchstart", removeInfoActive(musicInfos, i));
     }
     
-    audioContainer.addEventListener("ajaxloaded", loadAudio);
+    audioContainer.addEventListener("ajaxfinished", loadAudio);
     
     component.addEventListener("install", install);
     component.addEventListener("uninstall", uninstall);

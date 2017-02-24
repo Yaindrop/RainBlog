@@ -14,12 +14,15 @@ Instructions:
     var body = document.getElementsByTagName("body")[0];
     var ContentWrapper = document.getElementById("content-wrapper");
     
-    var content = document.getElementById("bar-content");
-    var title = document.getElementById("bar-title");
-    var menu = document.getElementById("bar-menu");
-    var socialMenu = document.getElementById("social");
-    var socialItems = document.getElementsByClassName("social-item");
+    var content = document.getElementById("nb-content");
+    var title = document.getElementById("nb-title");
+    var menu = document.getElementById("nb-menu");
+    var socialMenu = document.getElementById("nb-social");
+    var socialItems = document.getElementsByClassName("nb-social-item");
     var socialStatus = new MenuStatus ();
+    var settingsMenu = document.getElementById("nb-settings");
+    var settingsItems = document.getElementsByClassName("nb-settings-item");
+    var settingsStatus = new MenuStatus ();
     
     function MenuStatus () {
         this.isAnimating = false;
@@ -30,7 +33,7 @@ Instructions:
         status.isAnimating = true;
         var count = 0,
             timer = window.setInterval(function () {
-                items[count].classList.toggle("social-item-shown");
+                items[count].classList.toggle("nb-item-shown");
                 count ++;
                 if (count === items.length) {
                     window.clearInterval(timer);
@@ -44,7 +47,7 @@ Instructions:
         status.isAnimating = true;
         var count = items.length - 1,
             timer = window.setInterval(function () {
-                items[count].classList.toggle("social-item-shown");
+                items[count].classList.toggle("nb-item-shown");
                 count --;
                 if (count === -1) {
                     window.clearInterval(timer);
@@ -62,24 +65,27 @@ Instructions:
     }
     var lastPos = 0;
     var isHidden = false;
+    
     function checkScroll () {
         if (document.body.scrollTop > component.offsetHeight && document.body.scrollTop > lastPos + 5) {
             if (!isHidden) {
-                title.classList.add("hidden-bar-content");
-                menu.classList.add("hidden-bar-content");
-                component.classList.add("hidden-bar");
+                title.classList.add("hidden-nb-content");
+                menu.classList.add("hidden-nb-content");
+                component.classList.add("hidden-nb");
+                hideMenu(socialItems, socialStatus);
                 isHidden = true;
             }
         } else if (document.body.scrollTop < lastPos - 5){
             if (isHidden) {
-                title.classList.remove("hidden-bar-content");
-                menu.classList.remove("hidden-bar-content");
-                component.classList.remove("hidden-bar");
+                title.classList.remove("hidden-nb-content");
+                menu.classList.remove("hidden-nb-content");
+                component.classList.remove("hidden-nb");
                 isHidden = false;
             }
         }
         lastPos = document.body.scrollTop;
     }
+    
     function install () {
         component.style.display = "block";
         ContentWrapper.innerHTML = "<div id=\"nav-space\"></div>" + ContentWrapper.innerHTML;
@@ -95,6 +101,9 @@ Instructions:
     install ();
     socialMenu.addEventListener("click", function () {
         toggleMenu(socialItems, socialStatus);
+    });
+    settingsMenu.addEventListener("click", function () {
+        toggleMenu(settingsItems, settingsStatus);
     });
     ContentWrapper.addEventListener("click", function () {
         hideMenu(socialItems, socialStatus);
