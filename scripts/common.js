@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         //Fetch the requested JSON file, then call the body
         $ajax.sendGetRequest(json, function (request) {
             PageJSON = request;
-            window.console.log("%cPage> JSON Loaded, URI: " + json, "color: orange");
+            window.console.log("%cAJAX> Page JSON Loaded, URI: " + json, "color: darkcyan");
             htmlURI = json.substring(0, json.indexOf(".")) + ".html";
             window.history.pushState({}, 0, htmlURI);
             body.dispatchEvent($ajax.makeEvent("jsonloaded"));
@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     body.addEventListener("ajaxfinished", function (e) {
         //If a new JSON file is loaded, load components and contents.
         if (e.message === "jsonloaded") {
+            window.console.log("%cBody> Start Page Loading", "color: orange");
             document.getElementsByTagName("title")[0].innerHTML = PageJSON.title;
             loadComponents();
             loadContents();
@@ -146,12 +147,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
             css.type = "text/css";
             css.rel = "stylesheet";
             head.appendChild(css);
-            //Send AJAX requests for HTML files
+            //Send AJAX requests for HTML
             $ajax.sendGetRequest("\/components\/" + addQueue[i] + "\/" + addQueue[i] + ".html", function (request) {
-                //Parse returned HTML file to div element, and append to body
+                //Parse returned HTML to div element, and append to body
                 //Note: The order is determined by the returning order of the AJXA requests.
                 var html = parseStringToDivElement(request);
                 body.appendChild(html);
+                window.console.log("%cAJAX> Component HTML Loaded:", "color: darkcyan");
+                window.console.log(html);
                 //Insert JS from /components/[ComponentID]/[ComponentID].js
                 var js = document.createElement("script");
                 js.component = addQueue[count];
@@ -170,19 +173,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
             });
         }
-//        function sortComponents () {
-//            var deviation = [];
-//            for (var i = 0; i < PageJSON.components.length; i ++) {
-//                deviation.push(loadedComponents.indexOf(PageJSON.components[i]) - i);
-//            }
-//            console.log(isSorted());
-//            function isSorted() {
-//                for (var i = 0; i < deviation.length; i ++) {
-//                    if(deviation[i] !== 0) return false;
-//                }
-//                return true;
-//            }
-//        }
         
         //Run Remove Queue
         for (var i = 0; i < removeQueue.length; i ++) {
@@ -228,8 +218,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
         var addQueue = [],
             removeQueue = [],
-            waitingHTML = [],
-            waitingJS = [],
             contentJson = [],
             count = 0;
         //Initialize Add Queue
@@ -259,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         //Run Add Queue
         for (var i = 0; i < addQueue.length; i ++) {
             var content = addQueue[i];
-            //Request content JSON file
+            //Request content JSON
             $ajax.sendGetRequest("\/contents\/" + content + "\/" + content + ".json", function (request) {
                 contentJson.push(request);
                 count ++;
@@ -275,19 +263,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             head.appendChild(css);
                             loadedCSS.push(contentJson[j].stylesheet);
                         }
-                        //Request HTML file, then insert JS
+                        //Request HTML, then insert JS
                         $ajax.sendGetRequest("\/contents\/" + contentJson[j].name + "\/" + contentJson[j].name + ".html", function (request) {
-                            //Parse Returned HTML File to Div Element and Add to Waiting Queue
+                            //Parse Returned HTML to Div Element and Add to Waiting Queue
                             var html = parseStringToDivElement(request);
-                            //waitingHTML.push(html);
                             ContentWrapper.appendChild(html);
+                            window.console.log("%cAJAX> Content HTML Loaded:", "color: darkcyan");
+                            window.console.log(html);
                             //If requested JS is not added, add
                             if (contentJson[count].script !== null) {
                                 var js = document.createElement("script");
                                 js.content = addQueue[count];
                                 js.src = contentJson[count].script;
                                 js.type = "text/javascript";
-                                //waitingJS.push(js);
                                 head.appendChild(js);
                             }
                             
