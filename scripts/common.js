@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 body.dispatchEvent($ajax.makeEvent("jsonloaded"));
             }, true);
         } else {
-            window.console.log("%AJAX> Error: Previous loading hasn't finished", "color: red");
+            window.console.log("%cAJAX> Error: Previous loading hasn't finished", "color: red");
         }
     }
     body.addEventListener("ajaxfinished", function (e) {
@@ -104,17 +104,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
             ContentLoaded = true;
             body.dispatchEvent(new Event("refreshfinished"));
         } else {
-            var a = Math.min(swap.firstindex, swap.secondindex),
-                b = Math.max(swap.firstindex, swap.secondindex);
+            var a = document.getElementById(loadedContents[Math.min(swap.firstindex, swap.secondindex)]),
+                b = document.getElementById(loadedContents[Math.max(swap.firstindex, swap.secondindex)]);
             if (Math.abs(swap.firstindex - swap.secondindex) === 1) {
-                document.getElementById(loadedContents[b]).insertBefore(document.getElementById(loadedContents[a]), null);
+                b.insertBefore(a, null);
             } else {
-                document.getElementById(loadedContents[b]).insertBefore(document.getElementById(loadedContents[a]).nextElementSibling, null);
-                document.getElementById(loadedContents[a]).insertBefore(document.getElementById(loadedContents[b]).previousElementSibling, null);
+                var temp = b.previousElementSibling;
+                b.insertBefore(a, null);
+                if (temp.nextElementSibling) {
+                    a.insertBefore(temp.nextElementSibling, null);
+                } else {
+                    a.appendChild(a.parentElement);
+                }
             }
-            temp = loadedContents[a];
-                loadedContents[a] = loadedContents[b];
-                loadedContents[b] = temp;
+            temp = loadedContents[swap.firstindex];
+            loadedContents[swap.firstindex] = loadedContents[swap.secondindex];
+            loadedContents[swap.secondindex] = temp;
             sortContents();
         }
     }
