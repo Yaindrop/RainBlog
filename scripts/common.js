@@ -22,31 +22,40 @@ document.addEventListener("DOMContentLoaded", function (event) {
      */
     var loadedCSS = [],
         loadedJS = [];
+    //Indicates whether components or contents are loaded
+    var ComponentLoaded = true,
+        ContentLoaded = true;
     //Initialize page with JSON file pointed by the url stored in the title tag.
     ajaxRefreshWith(document.getElementsByTagName("title")[0].dataset.json);
     //just for test
-    /*var delay1 = setTimeout(function () {
+    var delay1 = setTimeout(function () {
         ajaxRefreshWith("/tags/diary.json");
         var delay2 = setTimeout(function () {
             ajaxRefreshWith("/index.json");
         },3000);
-    },3000);*/
+    },3000);
     
     function ajaxRefreshWith (json) {
-        //Fetch the requested JSON file, then call the body
-        $ajax.sendGetRequest(json, function (request) {
-            PageJSON = request;
-            window.console.log("%cAJAX> Page JSON Loaded, URI: " + json, "color: darkcyan");
-            htmlURI = json.substring(0, json.indexOf(".")) + ".html";
-            window.history.pushState({}, 0, htmlURI);
-            body.dispatchEvent($ajax.makeEvent("jsonloaded"));
-        }, true);
+        if (ComponentLoaded && ContentLoaded) {
+            //Fetch the requested JSON file, then call the body
+            $ajax.sendGetRequest(json, function (request) {
+                PageJSON = request;
+                window.console.log("%cAJAX> Page JSON Loaded, URI: " + json, "color: darkcyan");
+                htmlURI = json.substring(0, json.indexOf(".")) + ".html";
+                window.history.pushState({}, 0, htmlURI);
+                body.dispatchEvent($ajax.makeEvent("jsonloaded"));
+            }, true);
+        } else {
+            window.console.log("%AJAX> Error: Previous loading hasn't finished", "color: red");
+        }
     }
     body.addEventListener("ajaxfinished", function (e) {
         //If a new JSON file is loaded, load components and contents.
         if (e.message === "jsonloaded") {
             window.console.log("%cBody> Start Page Loading", "color: orange");
             document.getElementsByTagName("title")[0].innerHTML = PageJSON.title;
+            ComponentLoaded = false;
+            ContentLoaded = false;
             loadComponents();
             loadContents();
         }
@@ -58,6 +67,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     component = document.getElementById(PageJSON.components[i]);
                     if (!component.active) component.dispatchEvent(new Event("install"));
                 }
+                ComponentLoaded = true;
+                body.dispatchEvent(new Event("refreshfinished"));
             }
         }
         //If contents loading finished, sort contents on the screen.
@@ -65,6 +76,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             if (!isAddingContents && !isRemovingContents) {
                 sortContents();
             }
+        }
+    });
+    body.addEventListener("refreshfinished", function () {
+        if (ComponentLoaded && ContentLoaded) {
+            window.console.log("%cBody> Page Loading Finished", "color: orange");
         }
     });
     function sortContents () {
@@ -84,7 +100,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
         window.console.log("%cContents Sort> Deviation: " + deviation, "color: purple");
         if (swap.first === 0 && swap.second === 0) {
-            console.log("Sorted");
+            window.console.log("%cContents Sort> Finished", "color: green");
+            ContentLoaded = true;
+            body.dispatchEvent(new Event("refreshfinished"));
         } else {
             var a = Math.min(swap.firstindex, swap.secondindex),
                 b = Math.max(swap.firstindex, swap.secondindex);
