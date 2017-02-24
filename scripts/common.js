@@ -25,12 +25,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     //Initialize page with JSON file pointed by the url stored in the title tag.
     ajaxRefreshWith(document.getElementsByTagName("title")[0].dataset.json);
     //just for test
-    var delay1 = setTimeout(function () {
+    /*var delay1 = setTimeout(function () {
         ajaxRefreshWith("/tags/diary.json");
         var delay2 = setTimeout(function () {
             ajaxRefreshWith("/index.json");
         },3000);
-    },3000);
+    },3000);*/
     
     function ajaxRefreshWith (json) {
         //Fetch the requested JSON file, then call the body
@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 swap.secondindex = i;
             }
         }
+        window.console.log("%cContents Sort> Deviation: " + deviation, "color: purple");
         if (swap.first === 0 && swap.second === 0) {
             console.log("Sorted");
         } else {
