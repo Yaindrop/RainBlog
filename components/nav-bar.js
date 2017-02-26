@@ -10,19 +10,79 @@ Instructions:
 */
 (function () {
     "use strict";
-    var component = document.getElementById("nav-bar");
+    var name = "nav-bar";
+    var component = {};
+    var css;
+    var html;
+    
     var body = document.getElementsByTagName("body")[0];
+    var head = document.getElementsByTagName("head")[0];
     var ContentWrapper = document.getElementById("content-wrapper");
     
-    var content = document.getElementById("nb-content");
-    var title = document.getElementById("nb-title");
-    var menu = document.getElementById("nb-menu");
-    var socialMenu = document.getElementById("nb-social");
-    var socialItems = document.getElementsByClassName("nb-social-item");
+    var content, title, menu, socialMenu, socialItems, settingsMenu, settingsItems;
+    
     var socialStatus = new MenuStatus ();
-    var settingsMenu = document.getElementById("nb-settings");
-    var settingsItems = document.getElementsByClassName("nb-settings-item");
     var settingsStatus = new MenuStatus ();
+    
+    
+    function load () {
+        css = document.createElement("link");
+        css.href = "\/components\/" + name + "\/" + name + ".css";
+        css.type = "text/css";
+        css.rel = "stylesheet";
+        head.appendChild(css);
+        window.console.log("%c" + name +"> Component CSS Loaded:", "color: green");
+        
+        $ajax.sendGetRequest("\/components\/" + name + "\/" + name + ".html", function (request) {
+            html = parseStringToElement(request);
+            body.appendChild(html);
+            window.console.log("%c" + name +"> Component HTML Loaded:", "color: green");
+            setTimeout(function () {
+                initialize();  
+            },0);
+        });
+    }
+    function initialize () {
+        content = document.getElementById("nb-content");
+        title = document.getElementById("nb-title");
+        menu = document.getElementById("nb-menu");
+        socialMenu = document.getElementById("nb-social");
+        socialItems = document.getElementsByClassName("nb-social-item");
+        socialStatus = new MenuStatus ();
+        settingsMenu = document.getElementById("nb-settings");
+        settingsItems = document.getElementsByClassName("nb-settings-item");
+        settingsStatus = new MenuStatus ();
+        
+        socialMenu.addEventListener("click", function () {
+            toggleMenu(socialItems, socialStatus);
+        });
+        settingsMenu.addEventListener("click", function () {
+            toggleMenu(settingsItems, settingsStatus);
+        });
+        ContentWrapper.addEventListener("click", function () {
+            hideMenu(socialItems, socialStatus);
+        });
+        ContentWrapper.addEventListener("touchstart", function () {
+            hideMenu(socialItems, socialStatus);
+        });
+        component.install = install;
+        component.uninstall = uninstall;
+        install();
+    }
+    function install () {
+        ContentWrapper.innerHTML = "<div id=\"nav-space\"></div>" + ContentWrapper.innerHTML;
+        window.onscroll = checkScroll;
+        external[name] = component;
+        window.console.log("%c" + name +"> Component Installed", "color: green");
+    }
+    function uninstall () {
+        ContentWrapper.removeChild(document.getElementById("nav-space"));
+        delete external[name];
+        css.parentNode.removeChild(css);
+        html.innerHTML = "";
+        html.parentNode.removeChild(html);
+        window.console.log("%c" + name +"> Component Uninstalled", "color: green");
+    }
     
     function MenuStatus () {
         this.isAnimating = false;
@@ -85,33 +145,5 @@ Instructions:
         }
         lastPos = document.body.scrollTop;
     }
-    
-    function install () {
-        component.style.display = "block";
-        ContentWrapper.innerHTML = "<div id=\"nav-space\"></div>" + ContentWrapper.innerHTML;
-        window.onscroll = checkScroll;
-        component.active = true;
-    }
-    function uninstall () {
-        component.style.display = "none";
-        ContentWrapper.removeChild(document.getElementById("nav-space"));
-        component.active = false;
-    }
-    
-    install ();
-    socialMenu.addEventListener("click", function () {
-        toggleMenu(socialItems, socialStatus);
-    });
-    settingsMenu.addEventListener("click", function () {
-        toggleMenu(settingsItems, settingsStatus);
-    });
-    ContentWrapper.addEventListener("click", function () {
-        hideMenu(socialItems, socialStatus);
-    });
-    ContentWrapper.addEventListener("touchstart", function () {
-        hideMenu(socialItems, socialStatus);
-    });
-    
-    component.addEventListener("install", install);
-    component.addEventListener("uninstall", uninstall);
+    load ();
 })();

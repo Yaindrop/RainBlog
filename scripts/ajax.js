@@ -8,6 +8,14 @@
         if (message) e.message = message;
         return e;
     }
+    ajax.sendGetRequest = function (requestUrl, responseHandler, isJsonResponse) {
+        var request = getRequestObject();
+        request.onreadystatechange = function () {
+            handleResponse(request, responseHandler, isJsonResponse);
+        };
+        request.open("GET", requestUrl, true);
+        request.send(null); // for POST only
+    };
     
     function getRequestObject() {
         //Check whether XMLHttpRequest exists.
@@ -30,13 +38,5 @@
             }
         }
     }
-    ajax.sendGetRequest = function (requestUrl, responseHandler, isJsonResponse) {
-        var request = getRequestObject();
-        request.onreadystatechange = function () {
-            handleResponse(request, responseHandler, isJsonResponse);
-        };
-        request.open("GET", requestUrl, true);
-        request.send(null); // for POST only
-    };
     window.$ajax = ajax;
 })(window);
