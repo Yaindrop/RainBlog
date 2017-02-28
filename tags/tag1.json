@@ -1,5 +1,7 @@
 {
     "title": "Rainarea - Tag1",
-    "components": ["nav-bar", "music-player", "back-to-top"],
-    "contents": ["article1", "footer"]
+    "frame": "single-col",
+    "subframes": ["fm-main"],
+    "fm-main": ["article1", "footer"],
+    "components": ["nav-bar", "music-player"]
 }

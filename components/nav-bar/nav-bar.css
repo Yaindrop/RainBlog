@@ -1,3 +1,6 @@
+#nav-bar *{
+    color: white;
+}
 #nav-space{
     min-width: 100%;
     /*medium screen*/
@@ -5,7 +8,6 @@
 }
 #nav-bar{
     background-color: cornflowerblue;
-    color: white;
     position: fixed;
     top: 0;
     min-width: 100vw;
@@ -44,6 +46,7 @@
     display: inline-block;
     border-radius: 50%;
     overflow: hidden;
+    cursor:pointer;
     /*medium screen*/
     margin-left: 2vw;
     margin-right: 2vw;
@@ -63,6 +66,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor:pointer;
 }
 #nb-name{
     padding-top: 10%;
@@ -84,7 +88,6 @@
     font-family: monospace;
     color: darkslategrey;
     font-size: 3vw;
-    cursor:pointer;
 }
 /*Menu Part*/
 #nb-menu{
@@ -117,6 +120,7 @@
     position: relative;
 }
 .nb-social-item{
+    display: block;
     visibility: hidden;
     position: absolute;
     border: 1px solid rgba(255, 255, 255, 0);

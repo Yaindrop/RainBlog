@@ -1,47 +1,58 @@
 /*jshint browser: true */
+
 (function (external) {
     "use strict";
-    var name = "back-to-top";
-    var component = {};
+    var id = "back-to-top";
     var css;
     var html;
+    var componentI = {};
     
     var body = document.getElementsByTagName("body")[0];
     var head = document.getElementsByTagName("head")[0];
     
+    load ();
     function load () {
         css = document.createElement("link");
-        css.href = "\/components\/" + name + "\/" + name + ".css";
+        css.href = "\/components\/" + id + "\/" + id + ".css";
         css.type = "text/css";
         css.rel = "stylesheet";
         head.appendChild(css);
-        window.console.log("%c" + name +"> Component CSS Loaded:", "color: green");
+        window.console.log("%c" + id +"> Component CSS Loaded", "color: green");
         
-        $ajax.sendGetRequest("\/components\/" + name + "\/" + name + ".html", function (request) {
+        $ajax.sendGetRequest("\/components\/" + id + "\/" + id + ".html", function (request) {
             html = parseStringToElement(request);
             body.appendChild(html);
-            window.console.log("%c" + name +"> Component HTML Loaded:", "color: green");
-            setTimeout(function () {
-                initialize();  
-            },0);
+            window.console.log("%c" + id +"> Component HTML Loaded", "color: green");
+            
+            initialize();  
         });
     }
     function initialize () {
         html.addEventListener("click", smoothscroll);
-        component.install = install;
-        component.uninstall = uninstall;
+        
+        makeInterface ();
+    }
+    function makeInterface () {
+        componentI.install = install;
+        componentI.uninstall = uninstall;
+        componentI.isActive = false;
+        external.components[id] = componentI;
+        
         install();
     }
     function install () {
-        external[name] = component;
-        window.console.log("%c" + name +"> Component Installed", "color: green");
+        if (!componentI.isActive) {
+            html.style.display = "block";
+            window.console.log("%c" + id +"> Component Installed", "color: green");
+            componentI.isActive = true;
+        }
     }
     function uninstall () {
-        delete external[name];
-        css.parentNode.removeChild(css);
-        html.innerHTML = "";
-        html.parentNode.removeChild(html);
-        window.console.log("%c" + name +"> Component Uninstalled", "color: green");
+        if (componentI.isActive) {
+            html.style.display = "none";
+            window.console.log("%c" + id +"> Component Uninstalled", "color: green");
+            componentI.isActive = false;
+        }
     }
     
     function smoothscroll () {
@@ -51,6 +62,4 @@
             window.scrollTo (0,currentScroll - (currentScroll/4));
         }
     }
-    
-    load ();
 })(window);

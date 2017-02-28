@@ -1,5 +1,7 @@
 {
-    "title": "Rainarea - Diary",
-    "components": ["nav-bar", "music-player", "back-to-top"],
-    "contents": ["article2", "footer"]
+    "title": "Rainarea - Tag2",
+    "frame": "single-col",
+    "subframes": ["fm-main"],
+    "fm-main": ["article2", "footer"],
+    "components": ["nav-bar", "back-to-top"]
 }

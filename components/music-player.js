@@ -1,14 +1,16 @@
 /* global $ajax*/
 /* jshint browser: true */
+
 (function (external) {
     "use strict";
-    var name = "music-player";
-    var component = {};
+    var id = "music-player";
     var css;
     var html;
+    var componentI = {};
+    
     var body = document.getElementsByTagName("body")[0];
     var head = document.getElementsByTagName("head")[0];
-    var ContentWrapper = document.getElementById("content-wrapper");
+    var wrapper = document.getElementById("wrapper");
     
     var showButton, controller, bar;
     
@@ -28,20 +30,22 @@
     var isPaused = true;
     var checkProgress;
     
+    load ();
     function load () {
         css = document.createElement("link");
-        css.href = "\/components\/" + name + "\/" + name + ".css";
+        css.href = "\/components\/" + id + "\/" + id + ".css";
         css.type = "text/css";
         css.rel = "stylesheet";
         head.appendChild(css);
-        window.console.log("%c" + name +"> Component CSS Loaded:", "color: green");
+        window.console.log("%c" + id +"> Component CSS Loaded", "color: green");
         
-        $ajax.sendGetRequest("\/components\/" + name + "\/" + name + ".html", function (request) {
+        $ajax.sendGetRequest("\/components\/" + id + "\/" + id + ".html", function (request) {
             //Parse returned HTML to div element, and append to body
             //Note: The order is determined by the returning order of the AJAX requests.
             html = parseStringToElement(request);
             body.appendChild(html);
-            window.console.log("%c" + name +"> Component HTML Loaded:", "color: green");
+            window.console.log("%c" + id +"> Component HTML Loaded", "color: green");
+            
             initialize();  
         });
     }
@@ -84,7 +88,7 @@
             musicInfos[i].addEventListener("mouseenter", setInfoActive(musicInfos, i));
             musicInfos[i].addEventListener("mouseleave", removeInfoActive(musicInfos, i));
             musicInfos[i].addEventListener("click", setInfoActive(musicInfos, i));
-            ContentWrapper.addEventListener("touchstart", removeInfoActive(musicInfos, i));
+            wrapper.addEventListener("touchstart", removeInfoActive(musicInfos, i));
         }
         musicProgress.addEventListener("mousedown", function (e) {
             if (!isOnBar) {
@@ -111,22 +115,32 @@
                 toTime = (e.pageX - getPos(musicProgress).x)/musicProgress.offsetWidth;
             }
         });
-        component.install = install;
-        component.uninstall = uninstall;
+        
+        makeInterface ();
+    }
+    function makeInterface () {
+        componentI.install = install;
+        componentI.uninstall = uninstall;
+        componentI.isActive = false;
+        external.components[id] = componentI;
+        
         install();
     }
     function install () {
-        ContentWrapper.addEventListener("touchstart", hideMB);
-        external[name] = component;
-        window.console.log("%c" + name +"> Component Installed", "color: green");
+        if (!componentI.isActive) {
+            wrapper.addEventListener("touchstart", hideMB);
+            html.style.display = "block";
+            window.console.log("%c" + id +"> Component Installed", "color: green");
+            componentI.isActive = true;
+        }
     }
     function uninstall () {
-        ContentWrapper.removeEventListener("touchstart", hideMB);
-        delete external[name];
-        css.parentNode.removeChild(css);
-        html.innerHTML = "";
-        html.parentNode.removeChild(html);
-        window.console.log("%c" + name +"> Component Uninstalled", "color: green");
+        if (componentI.isActive) {
+            wrapper.removeEventListener("touchstart", hideMB);
+            html.style.display = "none";
+            window.console.log("%c" + id +"> Component Uninstalled", "color: green");
+            componentI.isActive = false;
+        }
     }
     
     /*Player Show & Hide*/
@@ -251,5 +265,4 @@
         }
         return {x: eleLeft, y: eleTop};
     }
-    load ();
 }) (window);

@@ -1,51 +1,50 @@
 /*global $ajax*/
 /*jshint browser: true */
 
-/*
-This script should be put in the root directory of the component and be named the same as the componentID.
-
-Instructions:
-    1. This script should run as soon as the component is loaded to the page, so make it a IIFE.
-    2. When the uninstall function is called, any external effects made by this script should be inversed.
-*/
-(function () {
+(function (external) {
     "use strict";
-    var name = "nav-bar";
-    var component = {};
+    var id = "nav-bar";
     var css;
     var html;
+    var componentI = {};
     
     var body = document.getElementsByTagName("body")[0];
     var head = document.getElementsByTagName("head")[0];
-    var ContentWrapper = document.getElementById("content-wrapper");
+    var wrapper = document.getElementById("wrapper");
     
-    var content, title, menu, socialMenu, socialItems, settingsMenu, settingsItems;
+    var navSpace = document.createElement("div");
+        navSpace.id = "nav-space";
     
-    var socialStatus = new MenuStatus ();
-    var settingsStatus = new MenuStatus ();
+    var socialStatus = new MenuStatus (),
+        settingsStatus = new MenuStatus ();
     
+    var content, logo, title, name, mode, menu, about, socialMenu, socialItems, settingsMenu, settingsItems;
     
+    load ();
     function load () {
         css = document.createElement("link");
-        css.href = "\/components\/" + name + "\/" + name + ".css";
+        css.href = "\/components\/" + id + "\/" + id + ".css";
         css.type = "text/css";
         css.rel = "stylesheet";
         head.appendChild(css);
-        window.console.log("%c" + name +"> Component CSS Loaded:", "color: green");
+        window.console.log("%c" + id +"> Component CSS Loaded", "color: green");
         
-        $ajax.sendGetRequest("\/components\/" + name + "\/" + name + ".html", function (request) {
+        $ajax.sendGetRequest("\/components\/" + id + "\/" + id + ".html", function (request) {
             html = parseStringToElement(request);
             body.appendChild(html);
-            window.console.log("%c" + name +"> Component HTML Loaded:", "color: green");
-            setTimeout(function () {
-                initialize();  
-            },0);
+            window.console.log("%c" + id +"> Component HTML Loaded", "color: green");
+            
+            initialize();
         });
     }
     function initialize () {
         content = document.getElementById("nb-content");
+        logo = document.getElementById("nb-logo");
         title = document.getElementById("nb-title");
+        name = document.getElementById("nb-name");
+        mode = document.getElementById("nb-mode");
         menu = document.getElementById("nb-menu");
+        about = document.getElementById("nb-about");
         socialMenu = document.getElementById("nb-social");
         socialItems = document.getElementsByClassName("nb-social-item");
         socialStatus = new MenuStatus ();
@@ -53,35 +52,54 @@ Instructions:
         settingsItems = document.getElementsByClassName("nb-settings-item");
         settingsStatus = new MenuStatus ();
         
+        logo.addEventListener("click", function () {
+            external.ajaxRefreshWith("/index.json")
+        });
+        name.addEventListener("click", function () {
+            external.ajaxRefreshWith("/index.json")
+        });
+        about.addEventListener("click", function () {
+            external.ajaxRefreshWith("/about.json")
+        });
         socialMenu.addEventListener("click", function () {
             toggleMenu(socialItems, socialStatus);
         });
         settingsMenu.addEventListener("click", function () {
             toggleMenu(settingsItems, settingsStatus);
         });
-        ContentWrapper.addEventListener("click", function () {
+        wrapper.addEventListener("click", function () {
             hideMenu(socialItems, socialStatus);
         });
-        ContentWrapper.addEventListener("touchstart", function () {
+        wrapper.addEventListener("touchstart", function () {
             hideMenu(socialItems, socialStatus);
         });
-        component.install = install;
-        component.uninstall = uninstall;
+        
+        makeInterface ();
+    }
+    function makeInterface () {
+        componentI.install = install;
+        componentI.uninstall = uninstall;
+        componentI.isActive = false;
+        external.components[id] = componentI;
+        
         install();
     }
     function install () {
-        ContentWrapper.innerHTML = "<div id=\"nav-space\"></div>" + ContentWrapper.innerHTML;
-        window.onscroll = checkScroll;
-        external[name] = component;
-        window.console.log("%c" + name +"> Component Installed", "color: green");
+        if (!componentI.isActive) {
+            wrapper.insertBefore(navSpace, wrapper.firstChild);
+            window.onscroll = checkScroll;
+            html.style.display = "block";
+            window.console.log("%c" + id + "> Component Installed", "color: green");
+            componentI.isActive = true;
+        }
     }
     function uninstall () {
-        ContentWrapper.removeChild(document.getElementById("nav-space"));
-        delete external[name];
-        css.parentNode.removeChild(css);
-        html.innerHTML = "";
-        html.parentNode.removeChild(html);
-        window.console.log("%c" + name +"> Component Uninstalled", "color: green");
+        if (componentI.isActive) {
+            wrapper.removeChild(navSpace);
+            html.style.display = "none";
+            window.console.log("%c" + id +"> Component Uninstalled", "color: green");
+            componentI.isActive = false;
+        }
     }
     
     function MenuStatus () {
@@ -127,11 +145,11 @@ Instructions:
     var isHidden = false;
     
     function checkScroll () {
-        if (document.body.scrollTop > component.offsetHeight && document.body.scrollTop > lastPos + 5) {
+        if (document.body.scrollTop > html.offsetHeight && document.body.scrollTop > lastPos + 5) {
             if (!isHidden) {
                 title.classList.add("hidden-nb-content");
                 menu.classList.add("hidden-nb-content");
-                component.classList.add("hidden-nb");
+                html.classList.add("hidden-nb");
                 hideMenu(socialItems, socialStatus);
                 isHidden = true;
             }
@@ -139,11 +157,10 @@ Instructions:
             if (isHidden) {
                 title.classList.remove("hidden-nb-content");
                 menu.classList.remove("hidden-nb-content");
-                component.classList.remove("hidden-nb");
+                html.classList.remove("hidden-nb");
                 isHidden = false;
             }
         }
         lastPos = document.body.scrollTop;
     }
-    load ();
-})();
+})(window);

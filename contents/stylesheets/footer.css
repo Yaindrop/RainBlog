@@ -1,11 +1,19 @@
-#footarea{
+#footer-area{
     /*medium screen*/
     margin: 3vw;
     font-size: 1.5vw;
     font-family: "STKaiti";
 }
-#footarea div{
+#footer-area div{
     text-align: center;
+}
+#footer-area a{
+    text-decoration: none;
+    color: cadetblue;
+    transition: All .2s linear;
+}
+#footer-area a:hover{
+    color: coral;
 }
 
 /*Small Screen*/
