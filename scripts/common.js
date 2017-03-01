@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     
     var isLoadingContents = false;
     var isLoadingComponents = false;
-
+        
     ajaxRefreshWith(document.getElementsByTagName("title")[0].dataset.json);
     
 //    var delay1 = setTimeout(function () {
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 page = request;
                 window.console.log("%cAJAX> Page JSON Loaded, URI: " + jsonURI, "color: darkcyan");
                 var htmlURI = jsonURI.substring(0, jsonURI.indexOf(".")) + ".html";
-                window.history.pushState({}, 0, htmlURI);
+                window.history.pushState({url: htmlURI, json: jsonURI}, 0, htmlURI);
                 page.contents = [];
                 for (var i = 0; i < page.subframes.length; i ++) {
                     page.contents = page.contents.concat(page[page.subframes[i]]);
@@ -52,6 +52,28 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }, true);
         }
     }
+    window.addEventListener("popstate", function(e) {
+        if (history.state){
+            if (isLoadingComponents || isLoadingComponents) {
+                window.console.log("%cPage> Error: Previous loading hasn't finished", "color: red");
+                history.forward(1);
+            } else {
+                var jsonURI = e.state.json;
+                $ajax.sendGetRequest(jsonURI, function (request) {
+                    page = request;
+                    window.console.log("%cAJAX> Page JSON Loaded, URI: " + jsonURI, "color: darkcyan");
+                    var htmlURI = jsonURI.substring(0, jsonURI.indexOf(".")) + ".html";
+                    window.history.replaceState({url: htmlURI, json: jsonURI}, 0, htmlURI);
+                    page.contents = [];
+                    for (var i = 0; i < page.subframes.length; i ++) {
+                        page.contents = page.contents.concat(page[page.subframes[i]]);
+                    }
+
+                    loadPage ();
+                }, true);
+            }
+        }
+    }, false);
     
     function loadPage () {
         window.console.log("%cPage> Loading Start", "color: orange");
@@ -122,6 +144,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             window.components[uninstallQueue[i]].uninstall ();
         }
         isLoadingComponents = false;
+        
+        checkPage ();
     } 
     
     function loadContents () {
@@ -212,10 +236,24 @@ document.addEventListener("DOMContentLoaded", function (event) {
             subframe = document.getElementById(page.subframes[i]);
             framecontents = page[page.subframes[i]];
             for (var j = 0; j < framecontents.length; j ++) {
-                subframe.appendChild(contents[framecontents[j]]);
+                var html = contents[framecontents[j]];
+                subframe.appendChild(html);
+                scripts = html.getElementsByTagName("script");
+                if (scripts.length > 0) {
+                    for (var k = 0; k < scripts.length; k ++) {
+                        eval(scripts[k].innerHTML);
+                    }
+                }
             }
         }
-        
         isLoadingContents = false;
+        
+        checkPage ();
+    }
+    
+    function checkPage () {
+        if (!isLoadingContents && !isLoadingComponents) {
+            window.console.log("%cPage> Loading Finished", "color: orange");
+        }
     }
 });

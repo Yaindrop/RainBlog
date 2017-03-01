@@ -2,6 +2,6 @@
     "title": "Rainarea - About",
     "frame": "single-col",
     "subframes": ["fm-main"],
-    "fm-main": ["about", "footer"],
+    "fm-main": ["about", "comment", "footer"],
     "components": ["nav-bar", "music-player", "back-to-top"]
 }

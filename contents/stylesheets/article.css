@@ -1,4 +1,4 @@
-article{
+.articles{
     width: 80vw;
     margin: auto;
     margin-top: 5vw;
@@ -9,6 +9,19 @@ article{
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
     font-size: 1rem;
     font-family: Hiragino Sans GB;
+}
+a{
+    color: black;
+    transition: All .2s linear;
+}
+.article-title a:hover{
+    color: cadetblue;
+}
+.article-text a{
+    color: cadetblue;
+}
+.article-text a:hover{
+    color: coral;
 }
 /*Small Screen*/
 @media screen and (max-width: 600px){

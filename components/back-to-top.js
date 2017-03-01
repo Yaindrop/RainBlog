@@ -24,7 +24,7 @@
             body.appendChild(html);
             window.console.log("%c" + id +"> Component HTML Loaded", "color: green");
             
-            initialize();  
+            initialize();
         });
     }
     function initialize () {

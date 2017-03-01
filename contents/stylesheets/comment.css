@@ -1,0 +1,18 @@
+#comment{
+    width: 80vw;
+    margin: auto;
+    margin-top: 5vw;
+    margin-bottom: 5vw;
+    padding: 1vw;
+    background-color: white;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    font-family: Hiragino Sans GB;
+}
+#ds-thread{
+    margin: 5vw;
+    z-index: 0;
+}
+.ds-powered-by, .ds-meta, .ds-sync, .ds-add-emote{
+    display: none !important;
+}
