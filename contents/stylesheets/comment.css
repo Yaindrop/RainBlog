@@ -9,6 +9,9 @@
     font-size: 1rem;
     font-family: Hiragino Sans GB;
 }
+#comment h2{
+    margin: 1vw;
+}
 #ds-thread{
     margin: 5vw;
     z-index: 0;

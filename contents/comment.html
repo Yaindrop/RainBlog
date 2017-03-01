@@ -1,17 +1,15 @@
 <div id="comment" data-css="/contents/stylesheets/comment.css">
-    <h1></h1>
     <script>
-        (function () {
-            var key = "about";
-            if (!document.getElementById("duoshuo-div")) {
-                var el = document.createElement('div');
-                el.id = "duoshuo-div";
-                el.setAttribute('data-thread-key', key);
-                el.setAttribute('data-url', 'http://blog.rarea.net/contents/comment.html');
-                DUOSHUO.EmbedThread(el);
-                document.getElementById("comment").appendChild(el);
-                window.console.log("Comment> Loaded");
-            }
-        })()
+        var ds_key = "about";
+        if (!document.getElementById("comment").loaded) {
+            console.log(document.getElementById("wrapper"));
+            var el = document.createElement('div');
+            el.setAttribute('data-thread-key', ds_key);
+            el.setAttribute('data-url', 'http://blog.rarea.net/contents/comment.html');
+            DUOSHUO.EmbedThread(el);
+            document.getElementById("comment").appendChild(el);
+            document.getElementById("comment").loaded = true;
+            window.console.log("Comment> Loaded");
+        }
     </script>
 </div>
